@@ -8,22 +8,15 @@ In this *second* version of the program, we added the following features (see re
 2. Various Approximation Methods, for reducing the Rounding Error.
 3. A Graphical User Interface
 
-## License
+## Table of Contents
 
-Shield: [![CC BY-NC-SA 4.0][cc-by-nc-sa-shield]][cc-by-nc-sa]
+[TOC]
 
-This work is licensed under a
-[Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License][cc-by-nc-sa].
 
-[![CC BY-NC-SA 4.0][cc-by-nc-sa-image]][cc-by-nc-sa]
-
-[cc-by-nc-sa]: http://creativecommons.org/licenses/by-nc-sa/4.0/
-[cc-by-nc-sa-image]: https://licensebuttons.net/l/by-nc-sa/4.0/88x31.png
-[cc-by-nc-sa-shield]: https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey.svg
 
 ## Installation
 
-The installation process takes three steps. The first is installing the Python3 Programming Language and the related packages. The second step regards the installation of the two *subsystems* used by the python code (as subprocesses), the CLINGO language and the GAMBIT package. The third step is installing the necessary third party python libraries. The installation instructions ware written for the Ubuntu 22.04 OS, but should be similar for any Linux distribution. The *Windows OS is currently unsupported*. The installation on windows should follow the similar steps, but some extra configuration may be needed. Also, for the program to run on Windows *some (minor) changes in the program's code may be necessary*, e.g. changing the directory separator from `/` to `\`.
+The installation process takes three steps. The first is installing the Python3 Programming Language and the related packages. The second step regards the installation of the two *subsystems* used by the python code (as subprocesses), the CLINGO language and the GAMBIT package. The third step is installing the necessary third party python libraries. The installation instructions where written for the Ubuntu 22.04 OS, but should be similar for any Linux distribution. The *Windows OS is currently unsupported*. The installation on windows should follow the similar steps, but some extra configuration may be needed. Also, for the program to run on Windows *some (minor) changes in the program's code may be necessary*, e.g. changing the directory separator from `/` to `\`.
 
 ### Python
 
@@ -87,7 +80,7 @@ $ sudo make install
 
 The `make` command will throw a few *warnings*. This will not be a problem if no *errors* are thrown. If the `sudo make install` command is executed successfully, then the installation should be completed. If the installation is successful, then the command `gambit-gnm` should be available. Open *any* directory on terminal and type the command `gambit-gnm`. You should get the following:
 
-![](./readme_figures/success-gambit.png)
+![](/home/merkouris/Έγγραφα/ΙΤΕ/Misinformation Games/Implementation of the Adaptation Procedure-v5-GUI/documentation/readme_figures/success-gambit.png)
 
 Type `Ctrl+D` or `Ctrl+C` to exit the prompt. The `gambit-gnm` is the *only* GAMBIT command used by our application.
 
@@ -116,7 +109,7 @@ An easy way to see if everything went right is to go to the `./source` directory
 
 You should get the following,
 
-![](./readme_figures/success-install.png)
+![](/home/merkouris/Έγγραφα/ΙΤΕ/Misinformation Games/Implementation of the Adaptation Procedure-v5-GUI/documentation/readme_figures/success-install.png)
 
 The `do_experiment.py` runs a selection of experiments and outputs the generated statistics. The command `python do_experiments.py 1 1` runs only the first experiment and outputs the statistics on the standard output. We will discuss the `do_experiment.py` file in more detail in a following Section.
 
@@ -134,19 +127,19 @@ The above installation process was tested on a *fresh* Ubuntu 20.04.4 installati
 
 ## How to execute the code
 
-There are two ways to execute the program, the user can either provide a `.mg` file as input, or specify some parameters in order to generate a random instance. In either cases the execution takes place in `./source` directory.
+There are two ways to execute the program, the user can either provide a `.mg` file as input (see the Input subsection, below), or specify some parameters in order to generate a random instance. In either cases the execution takes place in `./source` directory.
 
 1. **Input from file:**
 
    `python main.py -f <path_to_input_file>`
 
-   For example, you may run the input file provided, `python main.py -f ../input_data/2x2_mg_example.mg`. The provided input file should follow the `.mg` file format, see bellow.
+   For example, you may run the input file provided, `python main.py -f ../input_data/2x2_mg_example.mg`. The provided input file should follow the `.mg` file format, see below.
 
 2. **Random generation:**
 
    `python main.py -r <num_players> <strat_1> <strat_2> ... <strat_n> <max_util>`
 
-   Where, `<num_players>` is the number of players, `<strat_1> <strat_2> ... <strat_n>` are the number of strategies for each player, and `<max_util>` is the maximum utility. For example, `python -r 2 2 2 10` will generate a random 2x2 misinformation, where the utilities are in range {0, 1, 2, ..., 10}.
+   Where, `<num_players>` is the number of players, `<strat_1> <strat_2> ... <strat_n>` are the number of strategies for each player, and `<max_util>` is the maximum utility. For example, `python -r 2 2 2 10` will generate a random 2x2 misinformation, where the utilities are in set {0, 1, 2, ..., 10}.
 
 The user should provide either `-f <input_file>`, or `-r <params>` as arguments. Otherwise, an error message will be outputed.
 
@@ -226,7 +219,7 @@ The second non-commended, non-empty line should contain the strategies vector, i
 
 #### Normal form games (Utilities dictionaries)
 
-The `.mg` file should contain `n + 1`  utilities dictionaries, which encode `n + 1` normal form games. The first dictionary is regarded as the *actual* (or objective) game. The i-th game is the game of the (objective) i-th player. Each line contains a single payoff vector, the j-th number is the payoff of the j-th player. The sequence that the payoff vectors are written is fixed and follows the sequence that GAMBIT enumerates the strategy profiles (see [here](https://gambitproject.readthedocs.io/en/latest/formats.html#structure-of-the-body-list-of-payoffs)). The enumeration of the strategy profiles follows an "reverse" lexicographical order, e.g. `(1, 1), (2, 1), (1, 2), (2, 2)`. Consider the first normal form game of the above file.
+The `.mg` file should contain `n + 1`  utilities dictionaries, which encode `n + 1` normal form games. The first dictionary (the "0-th" game) is regarded as the *actual* (or objective) game. The i-th game is the subjective game of the i-th player. Each line contains a single payoff vector, the j-th number is the payoff of the j-th player. The sequence that the payoff vectors are written is fixed and follows the sequence that GAMBIT enumerates the strategy profiles (see [here](https://gambitproject.readthedocs.io/en/latest/formats.html#structure-of-the-body-list-of-payoffs)). The enumeration of the strategy profiles follows an "reverse" lexicographical order, e.g. `(1, 1), (2, 1), (1, 2), (2, 2)`. Consider the first normal form game of the above file.
 
 ```python
 # game 0 utilities
@@ -377,7 +370,7 @@ N_0, MG_0
 
 #### Leaves
 
-The application can print a catalogue of the leaf nodes with the argument `-l`. Note that each node of the adaptation tree contains a label (or *pointer*, see Wikipedia [here](https://en.wikipedia.org/wiki/Pointer_(computer_programming))). Two nodes, may have a label to the *same* misinformation game.
+The application can print a catalogue of the leaf nodes with the argument `-l`. Note that each node of the adaptation tree contains a label (or *pointer*, see Wikipedia [here](https://en.wikipedia.org/wiki/Pointer_(computer_programming))). Two nodes may have a label to the *same* misinformation game.
 
 ```python
         ## Leaves ##
@@ -489,9 +482,9 @@ We also provide commands to suppress some (`-q`), or all  (`-no`) of the output.
 
 ##### Quiet
 
-The quiet command forces a *"terminal friendly"* interface, that can be utilised from some parser script. Namely, the quiet command suppresses the "about" header of the output, while also suppresses the *"progress bar"*  (e.g. the message `# Progress Uniq MGs: 6/16`), and the colours. This "mode" is useful when someone wants to process the output of our application with some other program. Forces all the output to be in simple ASCII text, while discards all the unnecessary messages. Observe that we *keep* the headers of each section of the results. Each section of the results, begins with the character `#`. This can be utilised from a parsing in order to distinguish each section of data.
+The quiet command forces a *"terminal friendly"* interface, that can be utilised from some parser script. Namely, the quiet command suppresses the "about" header of the output, while also suppresses the *"progress bar"*  (e.g. the message `# Progress Uniq MGs: 6/16`), and the colours. This "mode" is useful when someone wants to process the output of our application with some other program. Forces all the output to be in simple ASCII text, while discards all the unnecessary messages. Observe that we *keep* the headers of each section of the results. Each section of the results, begins with the character `#`. This can be utilised from a parser in order to distinguish each section of data.
 
-![](./readme_figures/quiet.png)
+![](/home/merkouris/Έγγραφα/ΙΤΕ/Misinformation Games/Implementation of the Adaptation Procedure-v5-GUI/documentation/readme_figures/quiet.png)
 
 At the figure above we observe difference between a "vanilla" execution of the  `2x2_mg_example.mg` example file (left), and the execution of the same file with the `-q` argument (right).
 
@@ -499,13 +492,13 @@ At the figure above we observe difference between a "vanilla" execution of the  
 
 On the other hand, the `-no` argument suppresses *all* output. It is designed to provide a *"experiment friendly"* interface. Note that the `-no` argument, *doesn't suppress*  the "progress bar" (`# Progress Uniq MGs: 6/16`). This is useful for experiments on big instances, where the execution may take several minutes, or hours. Of course, the two arguments can be given together, i.e. `-q -no`. We give an example of the usage of `-no` bellow.
 
-![](./readme_figures/no-output.png)
+![](/home/merkouris/Έγγραφα/ΙΤΕ/Misinformation Games/Implementation of the Adaptation Procedure-v5-GUI/documentation/readme_figures/no-output.png)
 
 Because the output of the progress bar is overwritten, it is not visible in the above figure. 
 
 ## Run Experiments
 
-Experiments can me run with the `do_experiment.py` script.
+Experiments can be run with the `do_experiment.py` script.
 
 ```
 python do_experiment.py <exp_1> <exp_2> (optional) <file_out>
@@ -524,7 +517,10 @@ Takes three arguments, the last of which is optional. The first two arguments ar
 
 For each experiment, five games are randomly generated, with seeds the five first prime numbers, i.e. `2, 3, 5, 7, 11`, and utilities in the range `{0, 1, 2, ..., 10}`. For each experiment we discard the first and the last game, and take the average for the remaining three (see the relative Section in paper).
 
-**Note:** Only the *first six* (0-5) experiments are "feasible" and terminate in reasonable time (which can take up to a few hours).
+**Note:**
+
+* Only the *first six* (0-5) experiments are "feasible" and terminate in reasonable time (which can take up to a few hours).
+* Another important thing to note is that the experiments are *deterministic* in some sense, since the seed of the random number generator is fixed for each experiment.
 
 ## Code Documentation
 
@@ -915,7 +911,7 @@ Computes the NMEs of the misinformation game. Calls the method `NormalFormGame::
 def compute_pos_vecs(self):
 ```
 
-From the NMEs computes the position vectors, and fills the `nme` dictionary. Note that a NME is a *vectors of vectors*. For some NME $\sigma$ computes the position vectors $\chi(\sigma)$.
+From the NMEs computes the position vectors, and fills the `nme` dictionary. Note that a NME is a *vector of vectors*. For some NME $\sigma$ computes the position vectors $\chi(\sigma)$.
 
 **Precondition:** `nme_computed == True and pos_vec_computed == False`
 
@@ -1180,11 +1176,11 @@ def root_random(self, num_players, strategies, max_utility):
 
 The above method needs three arguments, the `num_players` which is an integer denoting the number of players, the `strategies` a list of integers which denotes the strategies vector, and the `max_utility` an integer needed for the random number generator. This method utilises the `MisinformationGame::generate_random_utilities(max_utility)`, and generates the utilities in the range `{0, 1, 2, ..., max_utility}`.
 
-**Percondition:** `root_initialized == False`
+**Precondition:** `root_initialized == False`
 
 **Postcondition:** `root_initialized == True`
 
-**Note:** In these initialisation methods, and the method `new_mis_game()` (see bellow), we call all the necessary methods to *completely* initialise the MG, i.e. we have `MG.initialization_completed() == True`.
+**Note:** In these initialization methods, and the method `new_mis_game()` (see below), we call all the necessary methods to *completely* initialize the MG, i.e. we have `MG.initialization_completed() == True`.
 
 ##### New misinformation game
 
@@ -1205,7 +1201,7 @@ Creates a new misinformation game and adds it to the `mg_pool` data structure. T
 def _adaptation_substep(self, node_id, parent, tuple_pos_vec, changed_from_parent, pred_pos_vec):
 ```
 
-This is perhaps *the most important* method of the `AdaptationProccedure` class. Takes five arguments. The first `node_id` is the id of the *child* node. The `parent` is the parent `AdaptationNode`. The third argument `tuple_pos_vec` is the *position vector* that will be updated from the parent to receive the child node. The fourth argument, `changed_from_parent` is quite self-explanatory; it denotes a boolean function that is `True` if and only if the resulting misinformation game has changed from its parent. The last argument, `pred_pos_vec` is the CLINGO-predicate of the position vector `tuple_pos_vec`. 
+This is perhaps *the most important* method of the `AdaptationProcedure` class. Takes five arguments. The first `node_id` is the id of the *child* node. The `parent` is the parent `AdaptationNode`. The third argument `tuple_pos_vec` is the *position vector* that will be updated from the parent to receive the child node. The fourth argument, `changed_from_parent` is quite self-explanatory; it denotes a boolean function that is `True` if and only if the resulting misinformation game has changed from its parent. The last argument, `pred_pos_vec` is the CLINGO-predicate of the position vector `tuple_pos_vec`. 
 
 We have three cases:
 
@@ -1467,7 +1463,7 @@ clingo_call = subprocess.run(
 
 This can be changed by changing the value in line 5.
 
-#### GMABIT subsystem
+#### GAMBIT subsystem
 
 The GAMBIT subsystem in defined in the `gambit.py` file. There, we define the `Gambit` class. The `Gambit` class is initialized as following.
 
@@ -1544,7 +1540,7 @@ An important thing to note is the existence of the `is_new_mg()` method. This me
 
 Before the adaptation procedure begins, but after the root misinformation game is initialized, we check *exhaustively* all the position vectors to test whether  the update operation on the root misinformation game, at the position vector, results in a changed misinformation game. If not, we add this misinformation game ad hoc to the roots `pos_vec_history`. The disadvantage of this approach is that, in order to perform this test, we need to make an expensive CLINGO call for each position vector. Let a $n$-player game, where the number of players' strategies  are denoted by $s_1, s_2, \dots, s_n$. Then, we would make $p = \prod_{i = 1}^{n} s_i$ CLINGO calls. On the other hand, this cost becomes *negligible*, with respect to the number of CLINGO calls we avoid during the adaptation procedure. See the following example.
 
-![](./readme_figures/preprocessing_vs_no_preprocessing.png)
+![](/home/merkouris/Έγγραφα/ΙΤΕ/Misinformation Games/Implementation of the Adaptation Procedure-v5-GUI/documentation/readme_figures/preprocessing_vs_no_preprocessing.png)
 
 In the above figure, we see the execution of the same instance, without (on the left) and with (on the right) preprocessing. The instance we executed is `python main.py -r 2 3 4 10 -fm -mtt 2 -dbg`, namely an instance of a 2-player misinformation game, with player 1 having 3 strategies, while player 2 has 4 strategies. The maximum utility had been set to 10. The random number generator used the default seed 0. From the above discussion, the preprocessing costs $3\cdot 4 = 12$ CLINGO calls. On the other hand, the preprocessing version, still manages to make 100 CLINGO calls less. 
 
@@ -1563,7 +1559,7 @@ The utilitarian motivation for implementing a parallel approach[^1]  is to make 
 #### Problems
 
 Observe that there is a trade of between (1) and (2, 3) of the above goals. The main problem appears when two threads are trying to access the same node. In general, this could happen quite often, since we can have *diamonds* in our graph (see paper). Observe the following figure.
-![](/home/merkouris/Έγγραφα/ΙΤΕ/Misinformation Games/Implementation of the Adaptation Procedure-v5-GUI/documentation/readme_figures/adaptation-graph-landscape-threads.png)
+<img src="/home/merkouris/Έγγραφα/ΙΤΕ/Misinformation Games/Implementation of the Adaptation Procedure-v5-GUI/documentation/readme_figures/adaptation-graph-landscape-threads.png" style="zoom:50%;" />
 
 Assume that thread `T1` reaches a node corresponding to the misinformation game $mG_1$, and thread `T2` reaches a node corresponding to $mG_2$. Here, we assume that $mG_1 \neq mG_2$. Let $mG_1$ to have a single position vector $\vec{v}_1$, while $mG_2$ to have the single position vector $\vec{v}_2$. On the other hand, we denote with $\mathtt{pos\_history}_1$ be the position vector history of $mG_1$, and similarly $\mathtt{pos\_history}_2$ be the position vector history of $mG_2$. Note that we would have $\mathtt{update\_operation}(\mathtt{pos\_history}_1, \vec{v}_{1}) = \mathtt{update\_operation}(\mathtt{pos\_history}_2, \vec{v}_{2}) = mG^\prime$. In this case, we want the update operation to be executed *only once*. We also have the same expectation for the method $\mathtt{compute\_pos\_vecs}()$. The first operation demands an expensive CLINGO call, while the later an even more expensive GAMBIT call.
 
@@ -1575,7 +1571,7 @@ We present our solution in the following figure.
 
 
 
-![](./readme_figures/parallel-execution.png)
+<img src="/home/merkouris/Έγγραφα/ΙΤΕ/Misinformation Games/Implementation of the Adaptation Procedure-v5-GUI/documentation/readme_figures/parallel-execution.png" style="zoom: 50%;" />
 
 In the above example, we assume `T1` acquires the lock first. We allow `T1` to keep the lock only as long it takes to check if the sequence is already computed. If the sequence corresponds to a new misinformation game, then we just create an *empty* instance of a misinformation game node and store it *pointer* to the dictionary. Then, `T1` releases the lock. Now, `T2` access the share dictionary `V` and finds that the key `seq` already exists. Hence, the `is_new_mg()` check will fail, and the `else` block will be executed, just adding the appropriate edge. On the other hand, `T1` will continue its computations *in parallel*, computing the payoff matrices of the new misinformation game $mG^\prime$ and its position vectors. Thus, we achieve goals (1)-(3).
 
@@ -1591,9 +1587,9 @@ Another issue one (inevitably) faces when using real number arithmetic in comput
 
 Observe the following figure.
 
-![](./voronoi-diagram.png)
+![](/home/merkouris/Έγγραφα/ΙΤΕ/Misinformation Games/Implementation of the Adaptation Procedure-v5-GUI/documentation/readme_figures/voronoi-diagram.png)
 
-Remember that if $\sigma =(s_1, s_2, \dots, s_n)$ is a * mixed strategy* of a player, then $s_i \geq 0$, for every $i \in [n]$ and $\sum_{i = 1}^n s_i = 1$. Let $\phi \colon \mathbb{R}^n \to \mathbb{R}^n$ be the mapping we chose. Then, if $\phi(\sigma) = (s_1^\prime, s_2^\prime, \dots, s_n^\prime)$, we want $s^\prime_i \geq 0$, $\sum_{i = 1}^n s^\prime_i = 1$, namely preserving the *strategy property*. For a strategy profile on $m$ players, we have $\phi(\sigma_1, \sigma_2, \dots, \sigma_m) = (\phi(\sigma_1), \phi(\sigma_2), \dots, \phi(\sigma_m))$. Observe that if a player has $n$ strategies, then we would have $2^n - 1$ possible sets of position vectors, namely the characteristic bit-vectors, of the positions of the strategies played with positive probability. Observe that this results in an equivalence class. For example, the equivalence class of the bit-vector $(1, 1, 0, 0, \dots, 0)$  contains all the valid mixed strategies that only their first two coordinates are positive, i.e. $(\frac{1}{2}, \frac{1}{2}, 0, \dots, 0)$, $(\frac{1}{3}, \frac{2}{3}, 0, \dots, 0)$,  $(\frac{3}{5}, \frac{2}{5}, 0, \dots, 0)$, etc. It's easy to see that all these equivalence classes are *infinite*. Now, from the above, our rounding error problem reduces to a *mis-identification* problem. Namely, the vector $(0.001, 0.999)$ should (probably) belong to the $(0, 1)$ class, instead it is assigned to the $(1, 1)$ class.
+Remember that if $\sigma =(s_1, s_2, \dots, s_n)$ is a *mixed strategy* of a player, then $s_i \geq 0$, for every $i \in [n]$ and $\sum_{i = 1}^n s_i = 1$. Let $\phi \colon [0, 1]^n \to [0, 1]^n$ be the mapping we chose. Then, if $\phi(\sigma) = (s_1^\prime, s_2^\prime, \dots, s_n^\prime)$, we want $s^\prime_i \geq 0$, $\sum_{i = 1}^n s^\prime_i = 1$, namely preserving the *strategy property*. For a strategy profile on $m$ players, we have $\phi(\sigma_1, \sigma_2, \dots, \sigma_m) = (\phi(\sigma_1), \phi(\sigma_2), \dots, \phi(\sigma_m))$. Observe that if a player has $n$ strategies, then we would have $2^n - 1$ possible sets of position vectors, namely the characteristic bit-vectors, of the positions of the strategies played with positive probability. Observe that this results in an equivalence class. For example, the equivalence class of the bit-vector $(1, 1, 0, 0, \dots, 0)$  contains all the valid mixed strategies that only their first two coordinates are positive, i.e. $(\frac{1}{2}, \frac{1}{2}, 0, \dots, 0)$, $(\frac{1}{3}, \frac{2}{3}, 0, \dots, 0)$,  $(\frac{3}{5}, \frac{2}{5}, 0, \dots, 0)$, etc. It's easy to see that all these equivalence classes are *infinite*. Now, from the above, our rounding error problem reduces to a *mis-identification* problem. Namely, the vector $(0.001, 0.999)$ should (probably) belong to the $(0, 1)$ class, instead it is assigned to the $(1, 1)$ class.
 
 ### A Possible Solution: Voronoi Diagrams & Classification
 
@@ -1720,7 +1716,7 @@ When using multithreading, the percentage of the time consumed by each subsystem
 
 We implemented a Graphical User Interface (GUI) for our program using GTK 3, more precisely the python gi library for GTK. The GUI can be invoked by running the `gui_main.py` file. After giving the `python gtk_graphical_user_interface.py` command in the terminal, the following window will appear.
 
-![](./readme_figures/gui_first_screen.png)
+![](/home/merkouris/Έγγραφα/ΙΤΕ/Misinformation Games/Implementation of the Adaptation Procedure-v5-GUI/documentation/readme_figures/gui_first_screen.png)
 
 The program will show an empty window with an additional dialog window. The dialog window will ask the user for an initialization method. As with the command line program, there are two initialization methods: initializing the adaptation procedure root from a file, or generating a random root, by providing some parameters.
 
@@ -1728,19 +1724,19 @@ The program will show an empty window with an additional dialog window. The dial
 
 Choosing the `File` option will open another dialog window which asks as to specify a `.mg` file:
 
-![](./readme_figures/gui_init_file.png)
+![](/home/merkouris/Έγγραφα/ΙΤΕ/Misinformation Games/Implementation of the Adaptation Procedure-v5-GUI/documentation/readme_figures/gui_init_file.png)
 
 ### Generating a Random Root
 
 On the other hand, choosing the `Random` option will result in the following dialog requesting the random generator parameters:
 
-![](./readme_figures/gui_init_random.png)
+![](/home/merkouris/Έγγραφα/ΙΤΕ/Misinformation Games/Implementation of the Adaptation Procedure-v5-GUI/documentation/readme_figures/gui_init_random.png)
 
 ### Processing Input
 
 When an initialization method is specified the program will proceed computing the results. Then a progress bar will appear showing a (not so accurate) estimation of the expected misinformation games to be computed.
 
-![](./readme_figures/running.png)
+![](/home/merkouris/Έγγραφα/ΙΤΕ/Misinformation Games/Implementation of the Adaptation Procedure-v5-GUI/documentation/readme_figures/running.png)
 
 The right hand number of the estimation is the number of all possible misinformation games that can appear throughout the adaptation procedure. In general, the misinformation games that will actually appear are fewer.
 
@@ -1748,7 +1744,7 @@ The right hand number of the estimation is the number of all possible misinforma
 
 When the computation is concluded the program will output the results in plain text format.
 
-![](./readme_figures/gui_results.png)
+![](/home/merkouris/Έγγραφα/ΙΤΕ/Misinformation Games/Implementation of the Adaptation Procedure-v5-GUI/documentation/readme_figures/gui_results.png)
 
 Each tab of the left or right column will contain the corresponding section of the results.
 
@@ -1756,7 +1752,7 @@ Each tab of the left or right column will contain the corresponding section of t
 
 From the setting menu we can configure various execution parameters, like we would do with the corresponding command line arguments.
 
-![](./readme_figures/gui_settings.png)
+![](/home/merkouris/Έγγραφα/ΙΤΕ/Misinformation Games/Implementation of the Adaptation Procedure-v5-GUI/documentation/readme_figures/gui_settings.png)
 
 ### Menus
 
@@ -1764,7 +1760,7 @@ The `File` menu provides many additional options for the user. From them we can 
 
 ### Notes on the Architecture
 
-![](./readme_figures/gui-architecture.png)
+<img src="/home/merkouris/Έγγραφα/ΙΤΕ/Misinformation Games/Implementation of the Adaptation Procedure-v5-GUI/documentation/readme_figures/gui-architecture.png" style="zoom:50%;" />
 
 The graphical user interface spawns a *process*[^1] the process executes the code of the file `application_process.py`. The process will communicate with the GUI using a [`multiprocessing.Queue`](https://docs.python.org/3/library/multiprocessing.html#multiprocessing.Queue), which is essentially a [pipe](https://en.wikipedia.org/wiki/Pipeline_(Unix)). The `application_process` spawns two threads, which we call `work_thread` and `msg_thread`. Both `work_thread` and `msg_thread` are "overlooking" the same code, namely the code inside the `application.py` file. In other works, using multiprocessing, the GUI invokes the command line application. Firstly, the GUI passes the arguments collected from the user, to the `application_proces` via the queue. Then the two threads take on. The `work_thread` essentially runs the adaptation procedure and waits to be concluded; then it will report the results to the GUI via the queue. On the other hand, the `msg_thread` monitors the progress of the adaptation procedure.  In regular intervals, it reports this progress to the GUI. Thus, the progress bar is implemented.
 
@@ -1776,7 +1772,7 @@ As we established above, there are always $k + 2$ threads running in parallel, w
 
 ## Agents' Knowledge
 
-You might have observed at the *tree* section of the results, that there exists a percentage net to the node identifier. This denotes the *total knowledge* of the agents at this node. The total knowledge in calculated by CLINGO *automatically* when the subsystem is invoked to compute the update operation.
+You might have observed that at the *tree* section of the results, there exists a percentage next to the node identifier. This denotes the *total knowledge* of the agents at this node. The total knowledge in calculated by CLINGO *automatically* when the subsystem is invoked to compute the update operation.
 
 ### Formal Definition
 
@@ -1818,25 +1814,27 @@ Due to CLINGO being a logic programming language, we can transfer the above math
 
 Using the agents' knowledge as [*potential*](https://en.wikipedia.org/wiki/Potential_method) (or [heuristic](https://en.wikipedia.org/wiki/Heuristic_(computer_science))) function we can find *efficiently* a single SME. In particular, instead of using a simple queue while traversing the adaptation graph, we can use a [*priority queue*](https://en.wikipedia.org/wiki/Priority_queue) and the knowledge of each misinformation game as value. Note that in each step of the adaptation procedure, the agent's *either acquire additional knowledge, or reach an SME*. Hence, with this method we can reach an SME in $O(\mathtt{total\_information}(mG_0))$ steps, where $mG_0$ is the root of the adaptation procedure. In other words, if the players reach 100% of the knowledge, then all the NMEs of the misinformation game are (inevitably) SMEs. Truing to increase the knowledge in each turn, we will reach faster to a point where the players' subjective views have been merge to the objective reality. On the other hand, there could be an SME, despite that the agents haven't discover the objective payoffs. Thus, this method being *heuristic*.
 
-#### Theorem: Finding a Single SME in Linear Time
+#### Theorem: Finding a Single SME in Linear GAMBIT calls
 
 From the above discussion we have the following interesting theorem.
 
-> A single SME can be found in *linear time* to the size of the instance. Namely, in $O(p)$ time.
+> A single SME can be found in *linear* GAMBIT calls,  to the size of the instance. Namely, in $O(p)$ time, having an oracle for $NASH$.
+
+Of course, $NASH$ is a $PPAD$-complete problem, hence the overall complexity would still be exponential, unless $P = NP$. Note that finding all SMEs, using our algorithm, takes an *exponential number* of GAMBIT calls, i.e. an exponential time to an exponential subprocess.
 
 ### Notes on Agents' Knowledge
 
 #### Stabilization Without Reaching the Objective Payoffs
 
-The adaptation procedure may become stabilized, *without the agents reaching 100% of the games knowledge*. In other words, the agents' may reach an equilibrium without discovering all the pieces of information about the misinformation game. This happens when the player have no *intensive* to explore anymore.
+The adaptation procedure may become stabilized, *without the agents reaching 100% of the games knowledge*. In other words, the agents' may reach an equilibrium without discovering all the pieces of information about the misinformation game. This happens when the player have no *incentive* to explore anymore.
 
 #### Knowledge vs A Priori "History" (Preprocessing)
 
-Preprocessing and Knowledge. Recall that with preprocessing we try to capture the *a priori* knowledge of the players, namely the position vectors that will not result in any change after the update operation. Let $mG_0$ be the root of the adaptation procedure. Also let $mG_0.\mathtt{history}()$ be the set of position vectors that will not change the misinformation game. We may have an *empty* history, with non-zero initial knowledge. This is because the players may have some initial knowledge, e.g. in position vector $\vec{v}$ player $i$ knows the correct payoff *only* of herself, but there is not a single position vector. where *all* the players know the payoff of *all* the other players.
+Recall that with preprocessing we try to capture the *a priori* knowledge of the players, namely the position vectors that will not result in any change after the update operation. Let $mG_0$ be the root of the adaptation procedure. Also let $mG_0.\mathtt{history}()$ be the set of position vectors that will not change the misinformation game. We may have an *empty* history, with non-zero initial knowledge. This is because the players may have some initial knowledge, e.g. in position vector $\vec{v}$ player $i$ knows the correct payoff *only* of herself, but there is not a single position vector. where *all* the players know the payoff of *all* the other players.
 
 A way to develop some intuition about this situation, observe the different probabilities of the two events. Let $K$ be the event where the agents in an *uniformly randomly chosen* misinformation game have *non zero* knowledge. Also let $H$ be the event, where the uniformly randomly chosen misinformation game has non empty initial history. We will calculate the probabilities $P(H), P(K)$ and we will show that $P(K) \gg P(H)$. Let $n$ be the number of players. To ease the computations, let all the players having the same number of strategies $s$. Lastly, let the payoffs be integers in the range $\{0, 1, \dots, u\}$.
 
-Firstly, we compute the probability $P(H)$. In order for the event to occur, we should have a position vector, which all the player agree upon. So the $n$ players and the actual game should agree upon the payments of player 1, the $n$ players and the actual game should agree upon the payments of player 2, etc. Hence,
+Firstly, we compute the probability $P(H)$. In order for the event to occur, we should have a position vector, which all the player agree upon. So the $n$ players and the actual game should agree upon the payments of player 1, the $n$ players and the actual game should agree upon the payoffs of player 2, etc. Hence,
 $$
 P(H) = \left(\frac{1}{u + 1}\right)^n \cdot \left(\frac{1}{u + 1}\right)^n \cdots \left(\frac{1}{u + 1}\right)^n = \left[ \left( \frac{1}{u + 1} \right)^{n}\right]^n = \left( \frac{1}{u + 1} \right)^{n^2}.
 $$
@@ -1851,6 +1849,8 @@ $$
 We see that $P(K) > P(K_1)$, but $P(K_1) \gg P(H)$. For example, if $s = 2$, $n = 2$, $u = 10$, we have $P(K) > P(K_1) = 0.72727$. Of course, if we keep $u$ constant and increase $s$ or $n$ then we would have non-zero initial knowledge with *probability one*[^2]!
 
 [^2]: The author of this program had some error in the preprocessing routine, but still got correct results in comparison with a previous version of the program without preprocessing. Perhaps a take to home lesson is that a  wrong program can still give correct results.
+
+**Notes:** Observe that the above analysis is based on the assumption that the misinformation games are generated by a uniform distribution. Of course, this assumption could as well be wrong for real world applications. On the other hand, it helps us to develop an intuition about the underlying phenomenon.
 
 ## Notes, Issues & Future Work
 
@@ -1868,18 +1868,16 @@ We see that $P(K) > P(K_1)$, but $P(K_1) \gg P(H)$. For example, if $s = 2$, $n 
 
 1. **[CR]** Absence of an *initialise form file* method in the `MisinformatioGame` class (see the note in Utilities from CLINGO section above).
 2. **[CR]** The name of the `MisinformationGame::clingo_compile_nme()` method is somewhat unfortunate.
-3. **[I]**  The `gambit-gnm` command *may* have some issues regarding *rounding errors*. For example, we could have the lines `NE, 0.98, 0.2, 0.9, 0.1`, and `NE, 1, 0, 1, 0` as separate Nash Equilibria.
+3. **[I]**  The `gambit-gnm` command *may* have some issues regarding *rounding errors*. For example, we could have the lines `NE, 0.98, 0.02, 0.9, 0.1`, and `NE, 1, 0, 1, 0` as separate Nash Equilibria.
 4. **[I]** In `.mg` file, the "inline" comment, i.e. `0 2 3 # commentd` raises an error, where `0 2 3` are some data.
 5. **[I]** The GUI doesn't look "pretty" in Ubuntu 22.04.  This is because the GTK method used to implement the menu is depricated.
 
-![](./readme_figures/gui_bug.png)
+![](/home/merkouris/Έγγραφα/ΙΤΕ/Misinformation Games/Implementation of the Adaptation Procedure-v6-minor-changes-parallel/documentation/readme_figures/gui_bug.png)
 
 ### Future Work
 
-1. We can implement an *approximation* for finding the NEs by intoducing a slack constant $\varepsilon$, this way, we could solve the Issue 9, see above.
-2. Installation packaging. For information see [here](https://packaging.python.org/en/latest/tutorials/packaging-projects/). Also, see docker.
-3. Using the agents' knowledge as heuristic to compute a *single* SME in *linear* time (see the related subsection titled Future Work: Finding a Single SME in Linear Time).
-4. A [python interface](https://pypi.org/project/pygambit/) was implemented for GAMBIT, maybe we could use that library instead in the future.
+1. Using the agents' knowledge as heuristic to compute a *single* SME in *linear* time (see the related subsection titled Future Work: Finding a Single SME in Linear GAMBIT calls).
+2. There are APIs for both [CLINGO](https://potassco.org/clingo/python-api/5.4/) and [GAMBIT](https://gambitproject.readthedocs.io/en/latest/pyapi.html) for python. There wasn't a GAMBIT python interface while this project was in development. Perhaps, it would be beneficial if we integrate these two subsystems in the python code. Thus, we could simplify the architecture of the code. Also, this could make application faster.
 
 ## Apendix A: Regarding the implementation of dictionaries and sets on Python 3 and the GAMBIT input file format .nfg
 
