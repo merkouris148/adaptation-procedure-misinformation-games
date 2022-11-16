@@ -1565,7 +1565,8 @@ The utilitarian motivation for implementing a parallel approach[^1]  is to make 
 #### Problems
 
 Observe that there is a trade of between (1) and (2, 3) of the above goals. The main problem appears when two threads are trying to access the same node. In general, this could happen quite often, since we can have *diamonds* in our graph (see paper). Observe the following figure.
-<img src="/home/merkouris/Έγγραφα/ΙΤΕ/Misinformation Games/Implementation of the Adaptation Procedure-v5-GUI/documentation/readme_figures/adaptation-graph-landscape-threads.png" style="zoom:50%;" />
+
+<img src="./readme_figures/adaptation-graph-landscape-threads.png" style="zoom:50%;" />
 
 Assume that thread `T1` reaches a node corresponding to the misinformation game $mG_1$, and thread `T2` reaches a node corresponding to $mG_2$. Here, we assume that $mG_1 \neq mG_2$. Let $mG_1$ to have a single position vector $\vec{v}_1$, while $mG_2$ to have the single position vector $\vec{v}_2$. On the other hand, we denote with $\mathtt{pos\_history}_1$ be the position vector history of $mG_1$, and similarly $\mathtt{pos\_history}_2$ be the position vector history of $mG_2$. Note that we would have $\mathtt{update\_operation}(\mathtt{pos\_history}_1, \vec{v}_{1}) = \mathtt{update\_operation}(\mathtt{pos\_history}_2, \vec{v}_{2}) = mG^\prime$. In this case, we want the update operation to be executed *only once*. We also have the same expectation for the method $\mathtt{compute\_pos\_vecs}()$. The first operation demands an expensive CLINGO call, while the later an even more expensive GAMBIT call.
 
@@ -1722,7 +1723,7 @@ When using multithreading, the percentage of the time consumed by each subsystem
 
 We implemented a Graphical User Interface (GUI) for our program using GTK 3, more precisely the python gi library for GTK. The GUI can be invoked by running the `gui_main.py` file. After giving the `python gtk_graphical_user_interface.py` command in the terminal, the following window will appear.
 
-![](./documentation/readme_figures/gui_first_screen.png)
+![](./readme_figures/gui_first_screen.png)
 
 The program will show an empty window with an additional dialog window. The dialog window will ask the user for an initialization method. As with the command line program, there are two initialization methods: initializing the adaptation procedure root from a file, or generating a random root, by providing some parameters.
 
@@ -1742,7 +1743,7 @@ On the other hand, choosing the `Random` option will result in the following dia
 
 When an initialization method is specified the program will proceed computing the results. Then a progress bar will appear showing a (not so accurate) estimation of the expected misinformation games to be computed.
 
-![](./documentation/readme_figures/running.png)
+![](./readme_figures/running.png)
 
 The right hand number of the estimation is the number of all possible misinformation games that can appear throughout the adaptation procedure. In general, the misinformation games that will actually appear are fewer.
 
@@ -1766,7 +1767,7 @@ The `File` menu provides many additional options for the user. From them we can 
 
 ### Notes on the Architecture
 
-<img src="./documentation/readme_figures/gui-architecture.png" style="zoom:50%;" />
+<img src="./readme_figures/gui-architecture.png" style="zoom:50%;" />
 
 The graphical user interface spawns a *process*[^1] the process executes the code of the file `application_process.py`. The process will communicate with the GUI using a [`multiprocessing.Queue`](https://docs.python.org/3/library/multiprocessing.html#multiprocessing.Queue), which is essentially a [pipe](https://en.wikipedia.org/wiki/Pipeline_(Unix)). The `application_process` spawns two threads, which we call `work_thread` and `msg_thread`. Both `work_thread` and `msg_thread` are "overlooking" the same code, namely the code inside the `application.py` file. In other works, using multiprocessing, the GUI invokes the command line application. Firstly, the GUI passes the arguments collected from the user, to the `application_proces` via the queue. Then the two threads take on. The `work_thread` essentially runs the adaptation procedure and waits to be concluded; then it will report the results to the GUI via the queue. On the other hand, the `msg_thread` monitors the progress of the adaptation procedure.  In regular intervals, it reports this progress to the GUI. Thus, the progress bar is implemented.
 
@@ -1878,7 +1879,7 @@ We see that $P(K) > P(K_1)$, but $P(K_1) \gg P(H)$. For example, if $s = 2$, $n 
 4. **[I]** In `.mg` file, the "inline" comment, i.e. `0 2 3 # commentd` raises an error, where `0 2 3` are some data.
 5. **[I]** The GUI doesn't look "pretty" in Ubuntu 22.04.  This is because the GTK method used to implement the menu is depricated.
 
-![](./documentation/readme_figures/gui_bug.png)
+![](./readme_figures/gui_bug.png)
 
 ### Future Work
 
