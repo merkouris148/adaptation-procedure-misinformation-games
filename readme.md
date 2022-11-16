@@ -86,7 +86,7 @@ $ sudo make install
 
 The `make` command will throw a few *warnings*. This will not be a problem if no *errors* are thrown. If the `sudo make install` command is executed successfully, then the installation should be completed. If the installation is successful, then the command `gambit-gnm` should be available. Open *any* directory on terminal and type the command `gambit-gnm`. You should get the following:
 
-![](/home/merkouris/Έγγραφα/ΙΤΕ/Misinformation Games/Implementation of the Adaptation Procedure-v5-GUI/documentation/readme_figures/success-gambit.png)
+![](./readme_figures/success-gambit.png)
 
 Type `Ctrl+D` or `Ctrl+C` to exit the prompt. The `gambit-gnm` is the *only* GAMBIT command used by our application.
 
@@ -115,7 +115,7 @@ An easy way to see if everything went right is to go to the `./source` directory
 
 You should get the following,
 
-![](./documentation/readme_figures/success-install.png)
+![](./readme_figures/success-install.png)
 
 The `do_experiment.py` runs a selection of experiments and outputs the generated statistics. The command `python do_experiments.py 1 1` runs only the first experiment and outputs the statistics on the standard output. We will discuss the `do_experiment.py` file in more detail in a following Section.
 
@@ -490,7 +490,7 @@ We also provide commands to suppress some (`-q`), or all  (`-no`) of the output.
 
 The quiet command forces a *"terminal friendly"* interface, that can be utilised from some parser script. Namely, the quiet command suppresses the "about" header of the output, while also suppresses the *"progress bar"*  (e.g. the message `# Progress Uniq MGs: 6/16`), and the colours. This "mode" is useful when someone wants to process the output of our application with some other program. Forces all the output to be in simple ASCII text, while discards all the unnecessary messages. Observe that we *keep* the headers of each section of the results. Each section of the results, begins with the character `#`. This can be utilised from a parser in order to distinguish each section of data.
 
-![](./documentation/readme_figures/quiet.png)
+![](./readme_figures/quiet.png)
 
 At the figure above we observe difference between a "vanilla" execution of the  `2x2_mg_example.mg` example file (left), and the execution of the same file with the `-q` argument (right).
 
@@ -498,7 +498,7 @@ At the figure above we observe difference between a "vanilla" execution of the  
 
 On the other hand, the `-no` argument suppresses *all* output. It is designed to provide a *"experiment friendly"* interface. Note that the `-no` argument, *doesn't suppress*  the "progress bar" (`# Progress Uniq MGs: 6/16`). This is useful for experiments on big instances, where the execution may take several minutes, or hours. Of course, the two arguments can be given together, i.e. `-q -no`. We give an example of the usage of `-no` bellow.
 
-![](/home/merkouris/Έγγραφα/ΙΤΕ/Misinformation Games/Implementation of the Adaptation Procedure-v5-GUI/documentation/readme_figures/no-output.png)
+![](./readme_figures/no-output.png)
 
 Because the output of the progress bar is overwritten, it is not visible in the above figure. 
 
@@ -1546,7 +1546,7 @@ An important thing to note is the existence of the `is_new_mg()` method. This me
 
 Before the adaptation procedure begins, but after the root misinformation game is initialized, we check *exhaustively* all the position vectors to test whether  the update operation on the root misinformation game, at the position vector, results in a changed misinformation game. If not, we add this misinformation game ad hoc to the roots `pos_vec_history`. The disadvantage of this approach is that, in order to perform this test, we need to make an expensive CLINGO call for each position vector. Let a $n$-player game, where the number of players' strategies  are denoted by $s_1, s_2, \dots, s_n$. Then, we would make $p = \prod_{i = 1}^{n} s_i$ CLINGO calls. On the other hand, this cost becomes *negligible*, with respect to the number of CLINGO calls we avoid during the adaptation procedure. See the following example.
 
-![](./documentation/readme_figures/preprocessing_vs_no_preprocessing.png)
+![](./readme_figures/preprocessing_vs_no_preprocessing.png)
 
 In the above figure, we see the execution of the same instance, without (on the left) and with (on the right) preprocessing. The instance we executed is `python main.py -r 2 3 4 10 -fm -mtt 2 -dbg`, namely an instance of a 2-player misinformation game, with player 1 having 3 strategies, while player 2 has 4 strategies. The maximum utility had been set to 10. The random number generator used the default seed 0. From the above discussion, the preprocessing costs $3\cdot 4 = 12$ CLINGO calls. On the other hand, the preprocessing version, still manages to make 100 CLINGO calls less. 
 
@@ -1577,7 +1577,7 @@ We present our solution in the following figure.
 
 
 
-<img src="./documentation/readme_figures/parallel-execution.png" style="zoom: 50%;" />
+<img src="./readme_figures/parallel-execution.png" style="zoom: 50%;" />
 
 In the above example, we assume `T1` acquires the lock first. We allow `T1` to keep the lock only as long it takes to check if the sequence is already computed. If the sequence corresponds to a new misinformation game, then we just create an *empty* instance of a misinformation game node and store it *pointer* to the dictionary. Then, `T1` releases the lock. Now, `T2` access the share dictionary `V` and finds that the key `seq` already exists. Hence, the `is_new_mg()` check will fail, and the `else` block will be executed, just adding the appropriate edge. On the other hand, `T1` will continue its computations *in parallel*, computing the payoff matrices of the new misinformation game $mG^\prime$ and its position vectors. Thus, we achieve goals (1)-(3).
 
@@ -1593,7 +1593,7 @@ Another issue one (inevitably) faces when using real number arithmetic in comput
 
 Observe the following figure.
 
-![](./documentation/readme_figures/voronoi-diagram.png)
+![](./readme_figures/voronoi-diagram.png)
 
 Remember that if $\sigma =(s_1, s_2, \dots, s_n)$ is a *mixed strategy* of a player, then $s_i \geq 0$, for every $i \in [n]$ and $\sum_{i = 1}^n s_i = 1$. Let $\phi \colon [0, 1]^n \to [0, 1]^n$ be the mapping we chose. Then, if $\phi(\sigma) = (s_1^\prime, s_2^\prime, \dots, s_n^\prime)$, we want $s^\prime_i \geq 0$, $\sum_{i = 1}^n s^\prime_i = 1$, namely preserving the *strategy property*. For a strategy profile on $m$ players, we have $\phi(\sigma_1, \sigma_2, \dots, \sigma_m) = (\phi(\sigma_1), \phi(\sigma_2), \dots, \phi(\sigma_m))$. Observe that if a player has $n$ strategies, then we would have $2^n - 1$ possible sets of position vectors, namely the characteristic bit-vectors, of the positions of the strategies played with positive probability. Observe that this results in an equivalence class. For example, the equivalence class of the bit-vector $(1, 1, 0, 0, \dots, 0)$  contains all the valid mixed strategies that only their first two coordinates are positive, i.e. $(\frac{1}{2}, \frac{1}{2}, 0, \dots, 0)$, $(\frac{1}{3}, \frac{2}{3}, 0, \dots, 0)$,  $(\frac{3}{5}, \frac{2}{5}, 0, \dots, 0)$, etc. It's easy to see that all these equivalence classes are *infinite*. Now, from the above, our rounding error problem reduces to a *mis-identification* problem. Namely, the vector $(0.001, 0.999)$ should (probably) belong to the $(0, 1)$ class, instead it is assigned to the $(1, 1)$ class.
 
@@ -1730,13 +1730,13 @@ The program will show an empty window with an additional dialog window. The dial
 
 Choosing the `File` option will open another dialog window which asks as to specify a `.mg` file:
 
-![](./documentation/readme_figures/gui_init_file.png)
+![](./readme_figures/gui_init_file.png)
 
 ### Generating a Random Root
 
 On the other hand, choosing the `Random` option will result in the following dialog requesting the random generator parameters:
 
-![](./documentation/readme_figures/gui_init_random.png)
+![](./readme_figures/gui_init_random.png)
 
 ### Processing Input
 
@@ -1750,7 +1750,7 @@ The right hand number of the estimation is the number of all possible misinforma
 
 When the computation is concluded the program will output the results in plain text format.
 
-![](./documentation/readme_figures/gui_results.png)
+![](./readme_figures/gui_results.png)
 
 Each tab of the left or right column will contain the corresponding section of the results.
 
@@ -1758,7 +1758,7 @@ Each tab of the left or right column will contain the corresponding section of t
 
 From the setting menu we can configure various execution parameters, like we would do with the corresponding command line arguments.
 
-![](./documentation/readme_figures/gui_settings.png)
+![](./readme_figures/gui_settings.png)
 
 ### Menus
 
